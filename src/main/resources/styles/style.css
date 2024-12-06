@@ -1,0 +1,88 @@
+/* Matte black sidebar */
+.main-panel {
+    -fx-background-color: #2f2f2f; /* Matte black */
+    -fx-padding: 7 7 7 0; /* Optional: Padding inside the dynamic pane */
+}
+
+.slidebar {
+    -fx-background-color: #2f2f2f; /* Matte black */
+}
+
+/* Style for the profile label */
+.profile-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #FFFFFF; /* White text */
+    -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+/* Matte black button styling */
+.custom-button {
+    -fx-background-color: #3C3D37; /* Darker matte black for buttons */
+    -fx-text-fill: white;           /* White text */
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;      /* Rounded corners */
+    -fx-padding: 10 15;              /* Padding around text */
+}
+
+.custom-button:hover {
+    -fx-background-color: #555555;  /* Slightly lighter black on hover */
+}
+
+.custom-button-selected {
+    -fx-background-color: #3498db; /* Selected color */
+    -fx-text-fill: white;
+}
+
+
+/* Dynamic pane background */
+.dynamicPane {
+    -fx-background-color: #ffffff; /* Matte black background */
+    -fx-background-radius: 15; /* Border radius for rounded corners */
+}
+
+/* Dynamic pane background */
+.dynamicPane {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 15;
+}
+
+.post-container {
+    -fx-background-color: #f0f2f5;
+    -fx-padding: 10;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-alignment: CENTER;
+}
+
+.post-profile-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.post-date {
+    -fx-font-size: 12px;
+    -fx-text-fill: #606770;
+}
+
+.post-description {
+    -fx-font-size: 14px;
+}
+
+.see-more {
+    -fx-text-fill: blue;
+    -fx-underline: true;
+    -fx-cursor: hand;
+}
+
+.logout-btn {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+    -fx-background-color: #2f2f2f;
+    -fx-padding: 10 15;
+}
+
+.logout-btn:hover {
+    -fx-background-color: #555555;  /* Slightly lighter black on hover */
+}

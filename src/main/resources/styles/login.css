@@ -1,0 +1,8 @@
+.mainpane {
+    -fx-background-color: #6256CA;
+}
+
+.profile-label {
+    -fx-text-fill: #FFFFFF;
+    -fx-prompt-text-fill: #FFFFFF;
+}

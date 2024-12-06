@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane fx:id="dynamicPane" stylesheets="@../styles/subscribe.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.swlc.social_media.controller.SubscriberController">
+    <children>
+        <!-- ScrollPane for posts -->
+        <ScrollPane fitToWidth="true" layoutY="55.0" prefHeight="355.0" prefWidth="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0">
+            <content>
+                <!-- FlowPane for responsive grid-style layout -->
+                <FlowPane fx:id="postPane" alignment="CENTER" hgap="20" vgap="20" />
+            </content>
+        </ScrollPane>
+
+        <!-- HBox for centering the buttons with a gap -->
+        <HBox spacing="20" alignment="CENTER" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <Button text="Subscribed" fx:id="subscribedBtn" onAction="#onClickSubscribedBtn" style="-fx-background-color: black"/>
+                <Button text="For Subscribe" fx:id="forSubBtn" onAction="#onClickForSubscribeBtn" style="-fx-background-color: black"/>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

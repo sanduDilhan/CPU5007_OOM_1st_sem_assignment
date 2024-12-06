@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="dynamicPane" xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/style.css" fx:controller="com.swlc.social_media.controller.DuplicateHomeController">
+    <children>
+        <ScrollPane fitToWidth="true" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <content>
+                <!-- VBox for posts -->
+                <VBox fx:id="postContainer" styleClass="post">
+                    <!-- Single post example -->
+                    <!--                     <AnchorPane styleClass="post-container">-->
+                    <!--                        <children>-->
+                    <!--                           &lt;!&ndash; Post Image &ndash;&gt;-->
+                    <!--                           <ImageView layoutX="10.0" layoutY="10.0" fitWidth="60.0" fitHeight="60.0">-->
+                    <!--                              <image>-->
+                    <!--                                 <Image url="@../images/noContent.jpg" />-->
+                    <!--                              </image>-->
+                    <!--                           </ImageView>-->
+                    <!--                           &lt;!&ndash; Profile Name &ndash;&gt;-->
+                    <!--                           <Label layoutX="80.0" layoutY="10.0" text="User Name" styleClass="post-profile-name" />-->
+                    <!--                           &lt;!&ndash; Post Description &ndash;&gt;-->
+                    <!--                           <Label layoutX="80.0" layoutY="30.0" text="This is an example post description." wrapText="true" prefWidth="300.0" styleClass="post-description"/>-->
+                    <!--                        </children>-->
+                    <!--                     </AnchorPane>-->
+                    <!-- Additional posts can be added here -->
+                </VBox>
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

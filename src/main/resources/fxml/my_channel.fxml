@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/channels.css" fx:controller="com.swlc.social_media.controller.MyChannelController">
+    <children>
+        <!-- Header Section -->
+        <HBox spacing="10" alignment="CENTER_LEFT" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <ImageView fx:id="userImageView" fitHeight="50.0" fitWidth="50.0" styleClass="rounded-image"/>
+            <Label fx:id="userNameLabel" text="My Profile Name" styleClass="username-label"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="createPostButton" text="Create Post" styleClass="crete-post-btn"  onAction="#CreatePostOnAction" />
+        </HBox>
+
+        <!-- Scroll Pane for Posts -->
+        <ScrollPane fitToWidth="true" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
+            <content>
+                <VBox fx:id="postContainer" styleClass="post" />
+            </content>
+        </ScrollPane>
+    </children>
+</AnchorPane>

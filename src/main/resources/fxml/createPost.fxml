@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/channel.css"  fx:controller="com.swlc.social_media.controller.CreatePostController">
+        <children>
+                <!-- HBox to Center Text Area for Description -->
+                <HBox alignment="CENTER" layoutY="20.0" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+                        <TextArea fx:id="textAreaDescription" prefWidth="360.0" prefHeight="100.0" promptText="Enter description..." wrapText="true" />
+                </HBox>
+                <!-- Default Image View -->
+                <HBox alignment="CENTER" layoutY="130.0" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20">
+                        <ImageView fx:id="imageView" fitWidth="360.0" fitHeight="200.0">
+                                <image>
+                                        <Image url="@../images/noContent.jpg" />
+                                </image>
+                        </ImageView>
+                </HBox>
+
+                <!-- Center Buttons -->
+                <HBox spacing="10" layoutY="340.0" AnchorPane.leftAnchor="20" AnchorPane.rightAnchor="20" alignment="CENTER">
+                        <Button fx:id="btnSelectImage" text="Select Image" onAction="#selectImage" minWidth="175"/>
+                        <Button fx:id="btnPost" text="Post" onAction="#createPostOnAction" minWidth="175"/>
+                </HBox>
+        </children>
+</AnchorPane>
