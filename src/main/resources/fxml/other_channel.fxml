@@ -8,16 +8,16 @@
     <children>
         <!-- Header Section -->
         <HBox spacing="10" alignment="CENTER_LEFT" AnchorPane.topAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
-            <ImageView fx:id="userImageView" fitHeight="50.0" fitWidth="50.0" styleClass="rounded-image"/>
-            <Label fx:id="userNameLabel" text="User Profile Name" styleClass="username-label"/>
+            <ImageView fx:id="userImgView" fitHeight="50.0" fitWidth="50.0" styleClass="rounded-image"/>
+            <Label fx:id="lblUserName" text="User Profile Name" styleClass="username-label"/>
             <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="subOrUnSubButton" styleClass="sub-button" onAction="#handleSubOrUnSubAction" />
+            <Button fx:id="subscribeOrUnSubscribeBtn" styleClass="sub-button" onAction="#btnHandleSubOrUnSubAction" />
         </HBox>
 
         <!-- Scroll Pane for Posts -->
         <ScrollPane fitToWidth="true" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0">
             <content>
-                <VBox fx:id="postContainer" styleClass="post" />
+                <VBox fx:id="postVbox" styleClass="post" />
             </content>
         </ScrollPane>
     </children>

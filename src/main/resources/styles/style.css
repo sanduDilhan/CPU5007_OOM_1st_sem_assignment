@@ -1,11 +1,11 @@
 /* Matte black sidebar */
 .main-panel {
-    -fx-background-color: #2f2f2f; /* Matte black */
+    -fx-background-color: #6256CA; /* Matte black */
     -fx-padding: 7 7 7 0; /* Optional: Padding inside the dynamic pane */
 }
 
 .slidebar {
-    -fx-background-color: #2f2f2f; /* Matte black */
+    -fx-background-color: #6256CA; /* Matte black */
 }
 
 /* Style for the profile label */
@@ -79,8 +79,9 @@
 .logout-btn {
     -fx-text-fill: red;
     -fx-font-weight: bold;
-    -fx-background-color: #2f2f2f;
+    -fx-background-color: #6256CA;
     -fx-padding: 10 15;
+    -fx-font-size: 15;
 }
 
 .logout-btn:hover {

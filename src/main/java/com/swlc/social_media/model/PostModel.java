@@ -60,7 +60,6 @@ public class PostModel {
             transaction.commit();
             postDTOS = modelMapper.map(posts, new TypeToken<List<PostDTO>>() {
             }.getType());
-            System.out.println(postDTOS);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

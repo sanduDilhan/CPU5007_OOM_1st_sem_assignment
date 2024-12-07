@@ -25,34 +25,34 @@ import java.util.List;
 
 public class MyChannelController {
 
-    public ImageView userImageView;
-    public Label userNameLabel;
-    public Button createPostButton;
+    public ImageView userImgView;
+    public Label lblUserName;
+    public Button btnCreatePost;
     @FXML
-    private VBox postContainer;
+    private VBox postVbox;
     PostModel postModel = new PostModel();
     @FXML
     public void initialize() {
-        if (postContainer == null) {
+        if (postVbox == null) {
             return;
         }
-        setImageToImageView(postModel.getProPicByChannelId(LoginController.loggedChannel.getChannelId()));
+        setImageToImageView(postModel.getProPicByChannelId(LoginController.currentLoggedChannel.getChannelId()));
         showAllPosts();
     }
 
     private void setImageToImageView(String imagePath) {
         try {
             Image image = new Image("upload/" + imagePath);
-            userImageView.setImage(image);
+            userImgView.setImage(image);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void showAllPosts() {
-        postContainer.getChildren().clear();
-        List<PostDTO> posts = postModel.getPostsByChannelId(LoginController.getLoggedChannel().getChannelId());
-        userNameLabel.setText(postModel.getNameByChannelId(LoginController.getLoggedChannel().getChannelId()));
+        postVbox.getChildren().clear();
+        List<PostDTO> posts = postModel.getPostsByChannelId(LoginController.getCurrentLoggedChannel().getChannelId());
+        lblUserName.setText(postModel.getNameByChannelId(LoginController.getCurrentLoggedChannel().getChannelId()));
 
         for (PostDTO post : posts) {
             addPost(post.getChannel().getLogo(), post.getChannel().getChannelName(),
@@ -134,11 +134,11 @@ public class MyChannelController {
         postContainerWrapper.setPadding(new Insets(10));
 
         // Add to main container VBox
-        postContainer.getChildren().add(postContainerWrapper);
-        postContainer.setAlignment(Pos.CENTER);
+        postVbox.getChildren().add(postContainerWrapper);
+        postVbox.setAlignment(Pos.CENTER);
     }
 
-    public void CreatePostOnAction(ActionEvent actionEvent) {
+    public void btnCreatePostOnAction(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/createPost.fxml"));
             Parent popupContent = fxmlLoader.load();
@@ -152,7 +152,7 @@ public class MyChannelController {
             popupStage.setWidth(600);
             popupStage.setHeight(450);
 
-            CreatePostController.createPostStage = popupStage;
+            CreatePostController.postCreterStage = popupStage;
 
             popupStage.showAndWait();
 

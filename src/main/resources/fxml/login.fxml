@@ -9,7 +9,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
-<AnchorPane fx:id="loginPane" prefHeight="300.0" prefWidth="500.0" styleClass="mainpane" stylesheets="@/styles/login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.swlc.social_media.controller.LoginController">
+<AnchorPane fx:id="loginPnl" prefHeight="300.0" prefWidth="500.0" styleClass="mainpane" stylesheets="@/styles/login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.swlc.social_media.controller.LoginController">
     <children>
         <VBox alignment="CENTER" layoutX="100.0" layoutY="25.0" prefHeight="250.0" prefWidth="400.0" spacing="12" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
          <Label prefHeight="46.0" prefWidth="118.0" text="Sign In" styleClass="profile-label">
@@ -17,10 +17,10 @@
                <Font size="31.0" />
             </font>
          </Label>
-            <JFXTextField fx:id="channelNameField" prefHeight="31.0" prefWidth="309.0" promptText="Username" styleClass="profile-label"/>
-            <JFXTextField fx:id="passwordField" prefHeight="31.0" prefWidth="309.0" promptText="Password" styleClass="profile-label"/>
-            <Button fx:id="loginButton"  mnemonicParsing="false" onAction="#onClickBtnLogin" prefHeight="31.0" prefWidth="100.0" text="Login" />
-            <JFXButton text="Don't have account? Register" style="-fx-text-fill: white" onAction="#btnNavigateRegisterOnAction"/>
+            <JFXTextField fx:id="txtChannelName" prefHeight="31.0" prefWidth="309.0" promptText="Username" styleClass="profile-label"/>
+            <JFXTextField fx:id="txtPasswordField" prefHeight="31.0" prefWidth="309.0" promptText="Password" styleClass="profile-label"/>
+            <Button fx:id="btnLogin"  mnemonicParsing="false" onAction="#onClickBtnLogin" prefHeight="31.0" prefWidth="100.0" text="Login" />
+            <JFXButton text="Don't have account? Register" style="-fx-text-fill: white" fx:id="btnGoRegisterOnAction" onAction="#btnGoRegisterOnAction"/>
         </VBox>
     </children>
 </AnchorPane>

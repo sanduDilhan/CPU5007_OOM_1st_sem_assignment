@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="dynamicPane" xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/style.css" fx:controller="com.swlc.social_media.controller.DuplicateHomeController">
+<AnchorPane fx:id="dynamicPnl" xmlns:fx="http://javafx.com/fxml" stylesheets="@../styles/style.css" fx:controller="com.swlc.social_media.controller.DuplicateHomeController">
     <children>
         <ScrollPane fitToWidth="true" prefHeight="400.0" prefWidth="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
             <content>
                 <!-- VBox for posts -->
-                <VBox fx:id="postContainer" styleClass="post">
+                <VBox fx:id="postVbox" styleClass="post">
                     <!-- Single post example -->
                     <!--                     <AnchorPane styleClass="post-container">-->
                     <!--                        <children>-->

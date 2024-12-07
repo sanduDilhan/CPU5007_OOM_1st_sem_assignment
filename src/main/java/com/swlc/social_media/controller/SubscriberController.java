@@ -18,22 +18,22 @@ import java.util.Set;
 
 public class SubscriberController {
 
-    public FlowPane postPane;
-    public AnchorPane dynamicPane;
-    public Button subscribedBtn;
-    public Button forSubBtn;
+    public FlowPane postPnl;
+    public AnchorPane dynamicPnl;
+    public Button subscribedChannelBtn;
+    public Button forSubChannelBtn;
     ChannelModel channelModel = new ChannelModel();
 
-    String subBtnAction = "unsub";
-    OtherChannelController otherChannelController = new OtherChannelController();
+    public String subBtnAction = "unsub";
+    OtherChannelController othersChannelController = new OtherChannelController();
 
     @FXML
     public void initialize() {
-        if (postPane == null) {
+        if (postPnl == null) {
             return;
         }
-        subscribedBtn.setStyle("-fx-background-color: black; -fx-text-fill: white;"); // Green color for active button
-        forSubBtn.setStyle("-fx-background-color: white; -fx-text-fill: black;"); // Default color for inactive button
+        subscribedChannelBtn.setStyle("-fx-background-color: black; -fx-text-fill: white;"); // Green color for active button
+        forSubChannelBtn.setStyle("-fx-background-color: white; -fx-text-fill: black;"); // Default color for inactive button
         displaySubChannels();
     }
 
@@ -57,13 +57,13 @@ public class SubscriberController {
         subscribeButton.setOnAction(event -> {
             if (subBtnAction.equals("sub")) {
                 channelModel.subscribeChannel(
-                        LoginController.getLoggedChannel(),
+                        LoginController.getCurrentLoggedChannel(),
                         new ChannelDTO(channelId, channelName)
                 );
                 displayUnSubChannels();
             } else {
                 channelModel.unSubscribeChannel(
-                        LoginController.getLoggedChannel(),
+                        LoginController.getCurrentLoggedChannel(),
                         new ChannelDTO(channelId, channelName)
                 );
                 displaySubChannels();
@@ -76,12 +76,12 @@ public class SubscriberController {
 
         postBox.setOnMouseClicked(event -> {
             try {
-                otherChannelController.setOtherChannelId(channelId);
+                othersChannelController.setOtherChannelId(channelId);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/other_channel.fxml"));
                 Pane channelPane = loader.load();
 
-                dynamicPane.getChildren().clear();
-                dynamicPane.getChildren().add(channelPane);
+                dynamicPnl.getChildren().clear();
+                dynamicPnl.getChildren().add(channelPane);
 
                 AnchorPane.setTopAnchor(channelPane, 0.0);
                 AnchorPane.setBottomAnchor(channelPane, 0.0);
@@ -91,31 +91,31 @@ public class SubscriberController {
                 e.printStackTrace();
             }
         });
-        postPane.getChildren().add(postBox);
+        postPnl.getChildren().add(postBox);
     }
 
-    public void onClickSubscribedBtn(ActionEvent actionEvent) {
+    public void onClickSubscribedChannelBtn(ActionEvent actionEvent) {
         subBtnAction = "unsub";
-        subscribedBtn.setStyle("-fx-background-color: black; -fx-text-fill: white;"); // Green color for active button
-        forSubBtn.setStyle("-fx-background-color: white; -fx-text-fill: black;"); // Default color for inactive button
-        postPane.getChildren().clear();
-        ChannelDTO channelDTOArray = channelModel.getSubscribedChannelsByChannelId(LoginController.loggedChannel.getChannelId());
+        subscribedChannelBtn.setStyle("-fx-background-color: black; -fx-text-fill: white;"); // Green color for active button
+        forSubChannelBtn.setStyle("-fx-background-color: white; -fx-text-fill: black;"); // Default color for inactive button
+        postPnl.getChildren().clear();
+        ChannelDTO channelDTOArray = channelModel.getSubscribedChannelsByChannelId(LoginController.currentLoggedChannel.getChannelId());
         for (ChannelDTO channel : channelDTOArray.getSubscribedChannels()) {
             addPost(channel.getChannelName(), channel.getLogo(), channel.getChannelId());
         }
     }
 
-    public void onClickForSubscribeBtn(ActionEvent actionEvent) {
+    public void onClickForSubscribeChannelBtn(ActionEvent actionEvent) {
         subBtnAction = "sub";
-        subscribedBtn.setStyle("-fx-background-color: white; -fx-text-fill: black;"); // Green color for active button
-        forSubBtn.setStyle("-fx-background-color: black; -fx-text-fill: white;"); //
-        postPane.getChildren().clear();
+        subscribedChannelBtn.setStyle("-fx-background-color: white; -fx-text-fill: black;"); // Green color for active button
+        forSubChannelBtn.setStyle("-fx-background-color: black; -fx-text-fill: white;"); //
+        postPnl.getChildren().clear();
         displayUnSubChannels();
     }
 
     public void displaySubChannels() {
-        postPane.getChildren().clear();
-        ChannelDTO channelDTOArray = channelModel.getSubscribedChannelsByChannelId(LoginController.loggedChannel.getChannelId());
+        postPnl.getChildren().clear();
+        ChannelDTO channelDTOArray = channelModel.getSubscribedChannelsByChannelId(LoginController.currentLoggedChannel.getChannelId());
         for (ChannelDTO channel : channelDTOArray.getSubscribedChannels()) {
             addPost(channel.getChannelName(), channel.getLogo(), channel.getChannelId());
         }
@@ -123,16 +123,16 @@ public class SubscriberController {
 
     public void displayUnSubChannels() {
         List<ChannelDTO> allChannels = channelModel.getAllChannel();
-        ChannelDTO channelDTOArray = channelModel.getSubscribedChannelsByChannelId(LoginController.loggedChannel.getChannelId());
+        ChannelDTO channelDTOArray = channelModel.getSubscribedChannelsByChannelId(LoginController.currentLoggedChannel.getChannelId());
 
         Set<Long> subscribedChannelIds = new HashSet<>();
 
         for (ChannelDTO subscribedChannel : channelDTOArray.getSubscribedChannels()) {
             subscribedChannelIds.add(subscribedChannel.getChannelId());
         }
-        postPane.getChildren().clear();
+        postPnl.getChildren().clear();
         for (ChannelDTO channel : allChannels) {
-            if (channel.getChannelId() != LoginController.getLoggedChannel().getChannelId() && !subscribedChannelIds.contains(channel.getChannelId())) {
+            if (channel.getChannelId() != LoginController.getCurrentLoggedChannel().getChannelId() && !subscribedChannelIds.contains(channel.getChannelId())) {
                 addPost(channel.getChannelName(), channel.getLogo(), channel.getChannelId());
             }
         }

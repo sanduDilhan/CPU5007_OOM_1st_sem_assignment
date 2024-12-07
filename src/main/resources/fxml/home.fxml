@@ -9,17 +9,17 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-panel" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.swlc.social_media.controller.HomeController">
+<AnchorPane fx:id="mainPnl" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="main-panel" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.swlc.social_media.controller.HomeController">
    <children>
       <!-- Fixed-width sidebar on the left with matte black background -->
-      <AnchorPane fx:id="sidePanel" layoutY="21.0" prefHeight="97.0" prefWidth="836.0" styleClass="slidebar" AnchorPane.bottomAnchor="303.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="sidePnl" layoutY="21.0" prefHeight="97.0" prefWidth="836.0" styleClass="slidebar" AnchorPane.bottomAnchor="303.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <!-- Center the StackPane horizontally within the sidebar and reduce image size -->
             <StackPane alignment="CENTER" layoutX="58.0" layoutY="32.0" prefHeight="34.0" prefWidth="42.0" />
 
             <!-- Position the label below the image -->
-            <Label fx:id="channelName" alignment="CENTER" layoutX="4.0" layoutY="66.0" prefWidth="200.0" styleClass="profile-label" text="Kushan Madusha" />
-            <ImageView fx:id="propic" fitHeight="50.0" fitWidth="50.0" layoutX="75.0" layoutY="16.0" onMouseClicked="#handleImageClick">
+            <Label fx:id="lblChannelName" alignment="CENTER" layoutX="4.0" layoutY="66.0" prefWidth="200.0" styleClass="profile-label" text="Kushan Madusha" />
+            <ImageView fx:id="profilePic" fitHeight="50.0" fitWidth="50.0" layoutX="75.0" layoutY="16.0" onMouseClicked="#handleImageClick">
                <image>
                   <Image url="@../images/noContent.jpg" />
                </image>
@@ -27,7 +27,7 @@
 <!--                     <Circle centerX="50.0" centerY="50.0" radius="50.0" />-->
 <!--                  </clip>-->
             </ImageView>
-            <ImageView fx:id="cameraView" fitHeight="25.0" fitWidth="25.0" layoutX="87.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="cameraImgView" fitHeight="25.0" fitWidth="25.0" layoutX="87.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/icons8-camera-24%20(1).png" />
                </image>
@@ -36,20 +36,20 @@
       </AnchorPane>
 
       <!-- Dynamic pane with scrollable posts -->
-      <AnchorPane fx:id="dynamicPane" layoutX="14.0" layoutY="102.0" prefHeight="297.0" prefWidth="819.0" styleClass="dynamicPane" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0">
+      <AnchorPane fx:id="dynamicPnl" layoutX="14.0" layoutY="102.0" prefHeight="297.0" prefWidth="819.0" styleClass="dynamicPane" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="95.0">
          <children>
             <!-- ScrollPane for posts -->
             <ScrollPane fitToWidth="true" layoutX="10.0" layoutY="8.0" prefHeight="192.0" prefWidth="527.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0">
                <content>
                   <!-- VBox for posts -->
-                  <VBox fx:id="postContainer" styleClass="post">
+                  <VBox fx:id="postVbox" styleClass="post">
                   </VBox>
                </content>
             </ScrollPane>
          </children>
       </AnchorPane>
-      <Button fx:id="btnNewsFeed" layoutX="310.0" layoutY="28.0" mnemonicParsing="false" onAction="#btnHomeOnAction" prefHeight="41.0" prefWidth="123.0" styleClass="custom-button" text="News Feed" />
-      <Button fx:id="btnChannel" layoutX="440.0" layoutY="28.0" mnemonicParsing="false" onAction="#btnChannelOnAction" prefHeight="41.0" prefWidth="137.0" styleClass="custom-button" text="Channel" />
-      <Button fx:id="btnLogout" layoutX="720.0" layoutY="28.0" mnemonicParsing="false" onAction="#btnLogOutOnAction" prefHeight="41.0" prefWidth="116.0" styleClass="logout-btn" text="L o g O u t" />
+      <Button fx:id="newsFeedBtn" layoutX="310.0" layoutY="28.0" mnemonicParsing="false" onAction="#btnNewsFeedOnAction" prefHeight="41.0" prefWidth="123.0" styleClass="custom-button" text="News Feed" />
+      <Button fx:id="channelBtn" layoutX="440.0" layoutY="28.0" mnemonicParsing="false" onAction="#btnChannelsOnAction" prefHeight="41.0" prefWidth="137.0" styleClass="custom-button" text="Channel" />
+      <Button fx:id="logoutBtn" layoutX="720.0" layoutY="28.0" mnemonicParsing="false" onAction="#btnSignOutOnAction" prefHeight="41.0" prefWidth="116.0" styleClass="logout-btn" text="L o g O u t" />
    </children>
 </AnchorPane>

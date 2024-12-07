@@ -1,6 +1,8 @@
 package com.swlc.social_media.controller;
 
+import com.swlc.social_media.dto.ChannelDTO;
 import com.swlc.social_media.dto.PostDTO;
+import com.swlc.social_media.model.ChannelModel;
 import com.swlc.social_media.model.PostModel;
 import com.swlc.social_media.utill.DateFormatter;
 import javafx.fxml.FXML;
@@ -19,18 +21,32 @@ import java.io.IOException;
 import java.util.List;
 
 public class DuplicateHomeController {
-    public VBox postContainer;
-    public AnchorPane dynamicPane;
+    public VBox postVbox;
+    public AnchorPane dynamicPnl;
     PostModel postModel = new PostModel();
-    OtherChannelController otherChannelController = new OtherChannelController();
+    OtherChannelController othersChannelController = new OtherChannelController();
+
+    ChannelModel channelModel = new ChannelModel();
+
     @FXML
     public void initialize() {
-        if (postContainer == null) {
+        if (postVbox == null) {
             return;
         }
 
-        // Retrieve and display posts
-        List<PostDTO> posts = postModel.getAllPost();
+        // Retrieve and display subscribed channels' posts
+        ChannelDTO subscribedChannelsArray = channelModel.getSubscribedChannelsByChannelId(LoginController.currentLoggedChannel.getChannelId());
+        for (ChannelDTO subscribedChannel : subscribedChannelsArray.getSubscribedChannels()) {
+            for (PostDTO post : postModel.getPostsByChannelId(subscribedChannel.getChannelId())) {
+                addPost(post.getChannel().getLogo(), post.getChannel().getChannelName(),
+                        post.getDescription(), post.getImageName(),
+                        DateFormatter.dateFormatter(post.getCreatedDate()),
+                        post.getChannel().getChannelId());
+            }
+        }
+
+        // Retrieve and display subscribed my posts
+        List<PostDTO> posts = postModel.getPostsByChannelId(LoginController.getCurrentLoggedChannel().getChannelId());
         for (PostDTO post : posts) {
             addPost(post.getChannel().getLogo(), post.getChannel().getChannelName(),
                     post.getDescription(), post.getImageName(),
@@ -42,6 +58,7 @@ public class DuplicateHomeController {
     // Method to dynamically add a post to the VBox
     public void addPost(String propic_name, String userName, String description, String image_name, String postDate, Long channelId) {
         AnchorPane postPane = new AnchorPane();
+        postPane.setId("postContainer");
         postPane.getStyleClass().add("post-container");
         postPane.setPrefWidth(350);
 
@@ -81,16 +98,16 @@ public class DuplicateHomeController {
         postPane.setOnMouseClicked(event -> {
             try {
                 Pane pane;
-                if(channelId == LoginController.loggedChannel.getChannelId()) {
+                if (channelId == LoginController.currentLoggedChannel.getChannelId()) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/my_channel.fxml"));
                     pane = loader.load();
                 } else {
-                    otherChannelController.setOtherChannelId(channelId);
+                    othersChannelController.setOtherChannelId(channelId);
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/other_channel.fxml"));
                     pane = loader.load();
                 }
-                dynamicPane.getChildren().clear();
-                dynamicPane.getChildren().add(pane);
+                dynamicPnl.getChildren().clear();
+                dynamicPnl.getChildren().add(pane);
 
                 AnchorPane.setTopAnchor(pane, 0.0);
                 AnchorPane.setBottomAnchor(pane, 0.0);
@@ -139,7 +156,7 @@ public class DuplicateHomeController {
         postContainerWrapper.setPadding(new Insets(10));
 
         // Add to main container VBox
-        postContainer.getChildren().add(postContainerWrapper);
-        postContainer.setAlignment(Pos.CENTER);
+        postVbox.getChildren().add(postContainerWrapper);
+        postVbox.setAlignment(Pos.CENTER);
     }
 }

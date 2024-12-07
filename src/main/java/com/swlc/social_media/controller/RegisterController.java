@@ -17,40 +17,40 @@ import java.io.File;
 import java.io.IOException;
 
 public class RegisterController {
-    public ImageView propic;
-    public ImageView cameraView;
-    public TextField channelname;
-    public TextField password;
-    public AnchorPane registerPane;
+    public ImageView profilePicture;
+    public ImageView cameraImgView;
+    public TextField txtChannelName;
+    public TextField txtPassword;
+    public AnchorPane registerPnl;
     ChannelModel channelModel = new ChannelModel();
     public static Stage primaryStage;
 
-    private File selectedFile = null;
+    public File selectedFile = null;
 
     public void handleImageClick(MouseEvent mouseEvent) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif"));
         fileChooser.setTitle("Select Profile Image");
 
-        selectedFile = fileChooser.showOpenDialog(cameraView.getScene().getWindow());
+        selectedFile = fileChooser.showOpenDialog(cameraImgView.getScene().getWindow());
         if (selectedFile != null) {
             Image image = new Image(selectedFile.toURI().toString());
-            propic.setImage(image);
+            profilePicture.setImage(image);
         }
     }
 
-    public void btnregisterOnAction(ActionEvent actionEvent) {
-        if(channelname.getText() == null || password.getText() == null || selectedFile == null) {
+    public void btnCreateAccountOnAction(ActionEvent actionEvent) {
+        if(txtChannelName.getText() == null || txtPassword.getText() == null || selectedFile == null) {
             new Alert(Alert.AlertType.ERROR, "please fill all field and select channel picture.").show();
             return;
         }
-        ChannelDTO new_channel = channelModel.registerChannel(new ChannelDTO(channelname.getText(), password.getText(), selectedFile.getName()), selectedFile);
+        ChannelDTO new_channel = channelModel.registerChannel(new ChannelDTO(txtChannelName.getText(), txtPassword.getText(), selectedFile.getName()), selectedFile);
         if (new_channel != null) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
                 Pane loginPane = loader.load();
-                registerPane.getChildren().clear();
-                registerPane.getChildren().add(loginPane);
+                registerPnl.getChildren().clear();
+                registerPnl.getChildren().add(loginPane);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -59,7 +59,7 @@ public class RegisterController {
         }
     }
 
-    public void btnNavigateLoginOnAction(ActionEvent actionEvent) {
+    public void btnGoLoginOnAction(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
             Pane loginPane = loader.load();
@@ -67,8 +67,8 @@ public class RegisterController {
             LoginController loginController = loader.getController();
             loginController.setPrimaryStage(primaryStage); // Pass the primary stage
 
-            registerPane.getChildren().clear();
-            registerPane.getChildren().add(loginPane);
+            registerPnl.getChildren().clear();
+            registerPnl.getChildren().add(loginPane);
         } catch (IOException e) {
             e.printStackTrace();
         }

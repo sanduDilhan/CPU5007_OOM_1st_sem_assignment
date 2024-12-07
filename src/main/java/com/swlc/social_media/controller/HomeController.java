@@ -1,5 +1,6 @@
 package com.swlc.social_media.controller;
 
+import com.swlc.social_media.dto.ChannelDTO;
 import com.swlc.social_media.dto.PostDTO;
 import com.swlc.social_media.dto.ResponseDTO;
 import com.swlc.social_media.model.ChannelModel;
@@ -29,17 +30,17 @@ import java.util.List;
 
 public class HomeController {
 
-    public AnchorPane dynamicPane;
-    public AnchorPane mainPanel;
-    public Label channelName;
-    public ImageView cameraView;
-    public ImageView propic;
-    public AnchorPane sidePanel;
-    public Button btnNewsFeed;
-    public Button btnLogout;
-    public Button btnChannel;
+    public AnchorPane dynamicPnl;
+    public AnchorPane mainPnl;
+    public Label lblChannelName;
+    public ImageView cameraImgView;
+    public ImageView profilePic;
+    public AnchorPane sidePnl;
+    public Button newsFeedBtn;
+    public Button logoutBtn;
+    public Button channelBtn;
     @FXML
-    private VBox postContainer;
+    private VBox postVbox;
 
     PostModel postModel = new PostModel();
     ChannelModel channelModel = new ChannelModel();
@@ -48,19 +49,30 @@ public class HomeController {
     @FXML
     public void initialize() {
 
-        if (postContainer == null) {
+        if (postVbox == null) {
             return;
         }
 
-        if (!LoginController.getLoggedChannel().getLogo().isEmpty()) {
-            propic.setImage(new Image(getClass().getResourceAsStream("/upload/" + LoginController.getLoggedChannel().getLogo())));
+        if (!LoginController.getCurrentLoggedChannel().getLogo().isEmpty()) {
+            profilePic.setImage(new Image(getClass().getResourceAsStream("/upload/" + LoginController.getCurrentLoggedChannel().getLogo())));
         }
 
         // Set the channel name
-        channelName.setText(LoginController.getLoggedChannel().getChannelName());
+        lblChannelName.setText(LoginController.getCurrentLoggedChannel().getChannelName());
 
-        // Retrieve and display posts
-        List<PostDTO> posts = postModel.getAllPost();
+        // Retrieve and display subscribed channels' posts
+        ChannelDTO subscribedChannelsArray = channelModel.getSubscribedChannelsByChannelId(LoginController.currentLoggedChannel.getChannelId());
+            for (ChannelDTO subscribedChannel : subscribedChannelsArray.getSubscribedChannels()) {
+                for ( PostDTO post: postModel.getPostsByChannelId(subscribedChannel.getChannelId())) {
+                    addPost(post.getChannel().getLogo(), post.getChannel().getChannelName(),
+                    post.getDescription(), post.getImageName(),
+                    DateFormatter.dateFormatter(post.getCreatedDate()),
+                    post.getChannel().getChannelId());
+                }
+        }
+
+        // Retrieve and display subscribed my posts
+        List<PostDTO> posts = postModel.getPostsByChannelId(LoginController.getCurrentLoggedChannel().getChannelId());
         for (PostDTO post : posts) {
             addPost(post.getChannel().getLogo(), post.getChannel().getChannelName(),
                     post.getDescription(), post.getImageName(),
@@ -68,9 +80,9 @@ public class HomeController {
                     post.getChannel().getChannelId());
         }
 
-        cameraView.setOnMouseClicked(event -> openFileChooser());
-        propic.setOnMouseClicked(this::handleImageClick);
-        setButtonSelected(btnNewsFeed);
+        cameraImgView.setOnMouseClicked(event -> openFileChooser());
+        profilePic.setOnMouseClicked(this::handleImageClick);
+        setButtonSelected(newsFeedBtn);
     }
 
     private void openFileChooser() {
@@ -80,15 +92,15 @@ public class HomeController {
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
 
-        File file = fileChooser.showOpenDialog(cameraView.getScene().getWindow());
+        File file = fileChooser.showOpenDialog(cameraImgView.getScene().getWindow());
         if (file == null) {
             return;
         }
 
-        ResponseDTO responseDTO = channelModel.updateProfilePicture(LoginController.loggedChannel.getChannelId(), file);
+        ResponseDTO responseDTO = channelModel.updateProfilePicture(LoginController.currentLoggedChannel.getChannelId(), file);
 
         if (responseDTO.getObj() != null) {
-            propic.setImage(new Image(file.toURI().toString()));
+            profilePic.setImage(new Image(file.toURI().toString()));
         }
     }
 
@@ -136,7 +148,7 @@ public class HomeController {
         postPane.setOnMouseClicked(event -> {
             try {
                 Pane pane;
-                if(channelId == LoginController.loggedChannel.getChannelId()) {
+                if(channelId == LoginController.currentLoggedChannel.getChannelId()) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/my_channel.fxml"));
                     pane = loader.load();
                 } else {
@@ -144,8 +156,8 @@ public class HomeController {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/other_channel.fxml"));
                     pane = loader.load();
                 }
-                dynamicPane.getChildren().clear();
-                dynamicPane.getChildren().add(pane);
+                dynamicPnl.getChildren().clear();
+                dynamicPnl.getChildren().add(pane);
 
                 AnchorPane.setTopAnchor(pane, 0.0);
                 AnchorPane.setBottomAnchor(pane, 0.0);
@@ -192,19 +204,19 @@ public class HomeController {
         postContainerWrapper.setPadding(new Insets(10));
 
         // Add to main container VBox
-        postContainer.getChildren().add(postContainerWrapper);
-        postContainer.setAlignment(Pos.CENTER);
+        postVbox.getChildren().add(postContainerWrapper);
+        postVbox.setAlignment(Pos.CENTER);
     }
 
-    public void btnHomeOnAction(ActionEvent actionEvent) {
+    public void btnNewsFeedOnAction(ActionEvent actionEvent) {
         try {
-            setButtonSelected(btnNewsFeed);
+            setButtonSelected(newsFeedBtn);
             // Load the FXML for the channel page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home_duplicate.fxml"));
             Pane channelPane = loader.load();
 
-            dynamicPane.getChildren().clear();
-            dynamicPane.getChildren().add(channelPane);
+            dynamicPnl.getChildren().clear();
+            dynamicPnl.getChildren().add(channelPane);
 
             AnchorPane.setTopAnchor(channelPane, 0.0);
             AnchorPane.setBottomAnchor(channelPane, 0.0);
@@ -215,14 +227,14 @@ public class HomeController {
         }
     }
 
-    public void btnChannelOnAction(ActionEvent actionEvent) {
+    public void btnChannelsOnAction(ActionEvent actionEvent) {
         try {
-            setButtonSelected(btnChannel);
+            setButtonSelected(channelBtn);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/subscriber.fxml"));
             Pane channelPane = loader.load();
 
-            dynamicPane.getChildren().clear();
-            dynamicPane.getChildren().add(channelPane);
+            dynamicPnl.getChildren().clear();
+            dynamicPnl.getChildren().add(channelPane);
 
             AnchorPane.setTopAnchor(channelPane, 0.0);
             AnchorPane.setBottomAnchor(channelPane, 0.0);
@@ -238,8 +250,8 @@ public class HomeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/my_channel.fxml"));
             Pane channelPane = loader.load();
 
-            dynamicPane.getChildren().clear();
-            dynamicPane.getChildren().add(channelPane);
+            dynamicPnl.getChildren().clear();
+            dynamicPnl.getChildren().add(channelPane);
 
             AnchorPane.setTopAnchor(channelPane, 0.0);
             AnchorPane.setBottomAnchor(channelPane, 0.0);
@@ -250,13 +262,13 @@ public class HomeController {
         }
     }
 
-    public void btnLogOutOnAction(ActionEvent actionEvent) {
+    public void btnSignOutOnAction(ActionEvent actionEvent) {
         try {
-            setButtonSelected(btnLogout);
+            setButtonSelected(logoutBtn);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
             AnchorPane loginPane = loader.load();
 
-            Stage currentStage = (Stage) mainPanel.getScene().getWindow();
+            Stage currentStage = (Stage) mainPnl.getScene().getWindow();
 
             currentStage.setScene(new Scene(loginPane));
             currentStage.centerOnScreen();
@@ -266,9 +278,9 @@ public class HomeController {
     }
 
     private void setButtonSelected(Button selectedButton) {
-        btnNewsFeed.getStyleClass().remove("custom-button-selected");
-        btnChannel.getStyleClass().remove("custom-button-selected");
-        btnLogout.getStyleClass().remove("custom-button-selected");
+        newsFeedBtn.getStyleClass().remove("custom-button-selected");
+        channelBtn.getStyleClass().remove("custom-button-selected");
+        logoutBtn.getStyleClass().remove("custom-button-selected");
         selectedButton.getStyleClass().add("custom-button-selected");
     }
 }

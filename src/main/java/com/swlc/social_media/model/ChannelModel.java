@@ -149,8 +149,6 @@ public class ChannelModel {
     }
 
     public ChannelDTO registerChannel(ChannelDTO channel, File selected_file) {
-        System.out.println(channel);
-        System.out.println(selected_file);
         String targetPath = "src/main/resources/upload/" + channel.getLogo();
         File targetFile = new File(targetPath);
 

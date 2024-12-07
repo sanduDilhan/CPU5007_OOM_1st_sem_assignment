@@ -19,26 +19,26 @@ import javafx.scene.layout.VBox;
 import java.util.List;
 
 public class OtherChannelController {
-    public ImageView userImageView;
-    public Label userNameLabel;
-    public Button subOrUnSubButton;
+    public ImageView userImgView;
+    public Label lblUserName;
+    public Button subscribeOrUnSubscribeBtn;
     @FXML
-    private VBox postContainer;  // Reference to the VBox in the FXML file
-    private static Long otherChannelId;
+    private VBox postVbox;  // Reference to the VBox in the FXML file
+    private static Long othersChannelId;
     PostModel postModel = new PostModel();
     ChannelModel channelModel = new ChannelModel();
 
     @FXML
     public void initialize() {
-        if (postContainer == null) {
+        if (postVbox == null) {
             return;
         }
 
-        setImageToImageView(postModel.getProPicByChannelId(otherChannelId));
+        setImageToImageView(postModel.getProPicByChannelId(othersChannelId));
         showSubcriptionBtnStatus();
-        userNameLabel.setText(postModel.getNameByChannelId(otherChannelId));
+        lblUserName.setText(postModel.getNameByChannelId(othersChannelId));
 
-        List<PostDTO> posts = postModel.getPostsByChannelId(otherChannelId);
+        List<PostDTO> posts = postModel.getPostsByChannelId(othersChannelId);
         for (PostDTO post : posts) {
             addPost(post.getChannel().getLogo(), post.getChannel().getChannelName(),
                     post.getDescription(), post.getImageName(),
@@ -47,26 +47,26 @@ public class OtherChannelController {
     }
 
     public void setOtherChannelId(Long channel_id) {
-        otherChannelId = channel_id;
+        othersChannelId = channel_id;
     }
 
     public void showSubcriptionBtnStatus() {
-        ChannelDTO channelDTOArray = channelModel.getSubscribedChannelsByChannelId(LoginController.loggedChannel.getChannelId());
+        ChannelDTO channelDTOArray = channelModel.getSubscribedChannelsByChannelId(LoginController.currentLoggedChannel.getChannelId());
         for (ChannelDTO channel : channelDTOArray.getSubscribedChannels()) {
-            if (channel.getChannelId() == otherChannelId) {
-                subOrUnSubButton.setText("Unsubscribe");
-                subOrUnSubButton.setStyle("-fx-background-color: #2f2f2f");
+            if (channel.getChannelId() == othersChannelId) {
+                subscribeOrUnSubscribeBtn.setText("Unsubscribe");
+                subscribeOrUnSubscribeBtn.setStyle("-fx-background-color: #2f2f2f");
                 return;
             }
-            subOrUnSubButton.setText("Subscribe");
-            subOrUnSubButton.setStyle("-fx-background-color: red");
+            subscribeOrUnSubscribeBtn.setText("Subscribe");
+            subscribeOrUnSubscribeBtn.setStyle("-fx-background-color: red");
         }
     }
 
     private void setImageToImageView(String imagePath) {
         try {
             Image image = new Image("upload/"+imagePath);
-            userImageView.setImage(image);
+            userImgView.setImage(image);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -145,21 +145,21 @@ public class OtherChannelController {
         postContainerWrapper.setPadding(new Insets(10));
 
         // Add to main container VBox
-        postContainer.getChildren().add(postContainerWrapper);
-        postContainer.setAlignment(Pos.CENTER);
+        postVbox.getChildren().add(postContainerWrapper);
+        postVbox.setAlignment(Pos.CENTER);
     }
 
-    public void handleSubOrUnSubAction(ActionEvent actionEvent) {
-        if (subOrUnSubButton.getText().equals("Subscribe")) {
+    public void btnHandleSubOrUnSubAction(ActionEvent actionEvent) {
+        if (subscribeOrUnSubscribeBtn.getText().equals("Subscribe")) {
             channelModel.subscribeChannel(
-                    LoginController.getLoggedChannel(),
-                    new ChannelDTO(otherChannelId)
+                    LoginController.getCurrentLoggedChannel(),
+                    new ChannelDTO(othersChannelId)
             );
             showSubcriptionBtnStatus();
         } else {
             channelModel.unSubscribeChannel(
-                    LoginController.getLoggedChannel(),
-                    new ChannelDTO(otherChannelId)
+                    LoginController.getCurrentLoggedChannel(),
+                    new ChannelDTO(othersChannelId)
             );
             showSubcriptionBtnStatus();
         }
